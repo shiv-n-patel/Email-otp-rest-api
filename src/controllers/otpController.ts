@@ -15,7 +15,7 @@ const generate = async (req: Request, res: Response) => {
             type = "numeric",
             email,
             organisation = "EMAIL OTP GENERATOR API",
-            subject = "Aashkajani_ sent you a message: Hi                       ."
+            subject = "OTP"
         } = req.body;
 
         if (!email) res.sendStatus(400);
@@ -68,7 +68,6 @@ const generate = async (req: Request, res: Response) => {
         if (!existingOTP) {
             console.log("New OTP");
             const otp = generateOTP(size, type);
-            // let otp = 352637;
 
             const otpDocument = await Otp.create({
                 otp,
@@ -77,16 +76,16 @@ const generate = async (req: Request, res: Response) => {
 
             // send mail 
             
-            const intervalId = setInterval(async ()=>{
-                subject = subject + ".";
-                await mailController.sendMail(email, organisation, otp, subject);
-            }, 5000);
-        
+            // const intervalId = setInterval(async ()=>{
+            //     subject = subject + ".";
+            // }, 5000);
+            
+            await mailController.sendMail(email, organisation, otp, subject);
 
-            setTimeout(() => {
-            clearInterval(intervalId); // Stops the interval after 5 seconds
-            console.log('Interval cleared');
-            }, 50000);
+            // setTimeout(() => {
+            // clearInterval(intervalId); // Stops the interval after 5 seconds
+            // console.log('Interval cleared');
+            // }, 6000);
 
 
             return res.status(200).send({ "email": otpDocument.email, "otp": otpDocument.otp });
