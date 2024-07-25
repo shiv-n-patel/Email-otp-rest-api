@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-const sendMail = async (email: string, organisation: string, otp: string, subject: string) => {
+const sendMail = async (email: string, organisation: string, otp: string | number, subject: string) => {
 
     const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -11,104 +11,89 @@ const sendMail = async (email: string, organisation: string, otp: string, subjec
         },
     });
 
+    organisation = "Aashkajani_ on instagram"
+
     const mailOptions = {
-        from: `"${organisation}" <${process.env.GMAIL_USER}>`,
+        from: `${organisation} <${process.env.GMAIL_USER}>`,
         to: email,
-        subject: `${subject}`,
-        text: `Your OTP is ${otp}`,
+        subject: `Aashkajani_ sent you a message`,
+        // text: `Aashkajani sent you a message: Hiii`,
         html: `
             <!DOCTYPE html>
             <html lang="en">
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                
-                <title>${organisation} One-Time Password (OTP)</title>
+                <title>New Message Notification</title>
                 <style>
                     body {
                         margin: 0;
                         padding: 0;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        height: 100vh;
-                        background-color: rgb(221, 219, 219);
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        font-family: Arial, sans-serif;
+                        background-color: #fafafa;
+                        color: #333;
                     }
-
-                    .mail-container {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-around;
-                        align-items: center;
-                        width: 90%;
+                    .container {
                         max-width: 600px;
-                        padding: 2em;
-                        border: none;
-                        border-radius: 1em;
-                        background-color: rgb(233, 233, 233);
-                        box-shadow: 0.5em 0.5em 0.8em rgba(185, 198, 255, 0.583), -0.5em -0.5em 0.8em rgba(185, 198, 255, 0.583);
+                        margin: 0 auto;
+                        padding: 20px;
+                        background-color: #ffffff;
+                        border: 1px solid #e0e0e0;
+                        border-radius: 10px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    }
+                    .header {
                         text-align: center;
+                        padding: 20px;
+                        border-bottom: 1px solid #e0e0e0;
                     }
-
-                    .mail-container h1 {
-                        margin: 0;
-                        font-size: 2em;
-                        color: rgb(100, 100, 255);
+                    .header img {
+                        width: 100px;
                     }
-
-                    .mail-container p {
-                        margin: 1em 0;
-                        color: rgb(100, 100, 100);
+                    .content {
+                        padding: 20px;
                     }
-
-                    .otp-code {
-                        font-size: 2.5em;
-                        letter-spacing: 0.2em;
-                        color: rgb(50, 50, 150);
-                        margin: 1em 0;
+                    .message-preview {
+                        background-color: #f0f0f0;
+                        padding: 15px;
+                        border-radius: 5px;
+                        font-size: 1.2em;
+                        margin-bottom: 20px;
                     }
-
-                    .footer p {
-                        margin: 0.5em 0;
-                        color: rgb(172, 172, 172);
+                    .footer {
+                        text-align: center;
+                        color: #999;
+                        padding: 20px;
+                        border-top: 1px solid #e0e0e0;
                     }
-
                     .footer a {
-                        color: rgb(100, 100, 255);
+                        color: #3897f0;
                         text-decoration: none;
-                    }
-
-                    .footer a:hover {
-                        text-decoration: underline;
                     }
                 </style>
             </head>
             <body>
-                <div class="mail-container">
-                    <div>
-                        <h1>Email OTP API</h1>
-                        <p>Let's verify you first.</p>
+                <div class="container">
+                    <div class="header">
+                        <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram">
                     </div>
-
-                    <p>Use this code to change your password:</p>
-                    <div class="otp-code">${otp}</div>
-
+                    <div class="content">
+                        <p><strong>Aashkajani_</strong> sent you a message:</p>
+                        
+                        <p><a href="https://www.instagram.com" style="color: #3897f0; text-decoration: none;">View Message</a></p>
+                    </div>
                     <div class="footer">
-                        <p>If you didn't request this email, ignore it.</p>
-                        <p>This API is built by <a href="https://github.com/shivam-n-patel">shivam-n-patel</a></p>
+                        <p>This message was sent to <strong>Vraj Shah</strong></p>
+                        <p><a href="https://www.instagram.com" style="color: #3897f0;">Unsubscribe</a> | <a href="https://www.instagram.com" style="color: #3897f0;">Help Center</a></p>
                     </div>
                 </div>
             </body>
             </html>
-
-        
-        `
+        `,
     };
 
     const res = await transporter.sendMail(mailOptions);
     console.log(res);
-
 }
 
 export default {

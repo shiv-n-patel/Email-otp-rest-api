@@ -7,3 +7,4 @@ otpRouter.post('/api/generate',otpController.generate);
 otpRouter.post('/api/verify',otpController.verify);
 
 export default otpRouter;
+

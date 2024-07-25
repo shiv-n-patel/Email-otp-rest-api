@@ -23,6 +23,7 @@ import logEvents from './middleware/logEvents';
 import errorHandler from './middleware/errorHandler';
 import credentials from './middleware/credentials';
 
+import otpController from './controllers/otpController';
 // --------------------------------------------------------------------
 // database connection esatablishment
 connectDB();
@@ -62,6 +63,13 @@ app.use("/", router);
 app.all('*', rootController.error404);
 
 app.use(errorHandler);
+
+try {
+  otpController.scheduledTask.start();
+}
+catch (error) {
+  console.log(error);
+}
 // when connected to DB :
 mongoose.connection.once('open', () => {
   console.log("Connected To Database");
