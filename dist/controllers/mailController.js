@@ -1,20 +1,8 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const nodemailer_1 = __importDefault(require("nodemailer"));
-const sendMail = (email, organisation, otp, subject) => __awaiter(void 0, void 0, void 0, function* () {
-    const transporter = nodemailer_1.default.createTransport({
+const nodemailer = require('nodemailer');
+
+const sendMail = async (email, organisation, otp, subject) => {
+    const transporter = nodemailer.createTransport({
         service: "gmail",
         secure: true,
         auth: {
@@ -22,11 +10,12 @@ const sendMail = (email, organisation, otp, subject) => __awaiter(void 0, void 0
             pass: process.env.GMAIL_PASS,
         },
     });
+
     const mailOptions = {
         from: `"${organisation}" <${process.env.GMAIL_USER}>`,
         to: email,
         subject: `${subject}`,
-        text: `Your OTP is ${otp}`,
+        text: `Your OTP is ${otp}. If you didn't request this email, ignore it. This API is built by shivam-n-patel.`,
         html: `
             <!DOCTYPE html>
             <html lang="en">
@@ -84,8 +73,8 @@ const sendMail = (email, organisation, otp, subject) => __awaiter(void 0, void 0
                             <p class="content">Let's verify you first.</p>
                             <p class="content">Use this code to change your password:</p>
                             <h2 class="otp">${otp}</h2>
-                            <p>If you didn't request this email, ignore it.</p>
-                            <p>This API is built by <a href="https://github.com/shivam-n-patel">shivam-n-patel</a></p>
+                            <p class="footer">If you didn't request this email, ignore it.</p>
+                            <p class="footer">This API is built by <a href="https://github.com/shivam-n-patel">shivam-n-patel</a></p>
                         </div>
                     </center>
                 </div>
@@ -93,9 +82,14 @@ const sendMail = (email, organisation, otp, subject) => __awaiter(void 0, void 0
             </html>
         `,
     };
-    const res = yield transporter.sendMail(mailOptions);
-    console.log(res);
-});
-exports.default = {
-    sendMail,
+
+    try {
+        const res = await transporter.sendMail(mailOptions);
+        console.log(res);
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
 };
+
+module.exports = { sendMail };
+
