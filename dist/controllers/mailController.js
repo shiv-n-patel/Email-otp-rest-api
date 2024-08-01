@@ -79,12 +79,14 @@ const sendMail = (email, organisation, otp, subject) => __awaiter(void 0, void 0
             <body>
                 <div class="container">
                     <center>
-                        <h1 class="header">Email OTP API</h1>
-                        <p class="content">Let's verify you first.</p>
-                        <p class="content">Use this code to change your password:</p>
-                        <h2 class="otp">${otp}</h2>
-                        <p>If you didn't request this email, ignore it.</p>
-                        <p>This API is built by <a href="https://github.com/shivam-n-patel">shivam-n-patel</a></p>
+                        <div>
+                            <h1 class="header">Email OTP API</h1>
+                            <p class="content">Let's verify you first.</p>
+                            <p class="content">Use this code to change your password:</p>
+                            <h2 class="otp">${otp}</h2>
+                            <p>If you didn't request this email, ignore it.</p>
+                            <p>This API is built by <a href="https://github.com/shivam-n-patel">shivam-n-patel</a></p>
+                        </div>
                     </center>
                 </div>
             </body>
