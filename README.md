@@ -1,5 +1,5 @@
 # Email OTP REST API
-
+Demo Live API : https://email-otp-rest-api.onrender.com
 ## Overview
 
 This project provides a REST API for generating and verifying One-Time Passwords (OTPs) via email. The API offers two main endpoints: one for generating OTPs and another for verifying them.
