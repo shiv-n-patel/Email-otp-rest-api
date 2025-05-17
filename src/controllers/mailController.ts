@@ -73,7 +73,7 @@ const sendMail = async (email: string, organisation: string, otp: string | numbe
                         <p class="content">Use this code to change your password:</p>
                         <h2 class="otp">${otp}</h2>
                         <p>If you didn't request this email, ignore it.</p>
-                        <p>This API is built by <a href="https://github.com/shiv-n-patel">shiv-n-patel</a></p>
+                        <p>This API is built by <a href="https://github.com/shiv-n-patel">shiv-n-patel</a> and <a href="https://github.com/zalabhavy">Bhavy Zala</a></p>
                     </center>
                 </div>
             </body>
